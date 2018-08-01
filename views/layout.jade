@@ -17,7 +17,12 @@ html
           a(href='/add') Leave Reviews
           a(href='/register') Register
           a(href='/login') log-in
+          a(href='/login') Hello Liam
     block content
    .footer
       p
         | Liam Made this Node JS Application 2018
+        form(method="post" action="/search")
+          label(for="search") Search:
+          input(name="search", type="text", Placeholder="Search For...") 
+          button.button(type="submit") Search

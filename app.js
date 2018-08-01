@@ -161,6 +161,23 @@ app.get('/products', function(req, res){
 
 
 
+// function to render the products page
+app.post('/search', function(req, res){
+ // res.send("Hello cruel world!"); // This is commented out to allow the index view to be rendered
+ let sql = 'SELECT * FROM products WHERE name LIKE "%'+req.body.search+'%";'
+ let query = db.query(sql, (err, res1) =>{
+  if(err)
+  throw(err);
+ 
+  res.render('products', {root: VIEWS, res1}); // use the render command so that the response object renders a HHTML page
+  console.log("I Set a Session as shown on products page" + req.session.email);
+ });
+ 
+ console.log("Now you are on the products page!");
+});
+
+
+
 // function to render the individual products page
 app.get('/item/:id', function(req, res){
  
@@ -359,20 +376,10 @@ app.get('/register', function(req, res){
  
 app.post('/register', function(req, res){
 
-db.query('INSERT INTO users (Name, Email, Password) VALUES ("'+req.body.name+'", "'+req.body.email+'", "'+req.body.password+'")' , function(req, res){
-
-db.query('SELECT LAST_INSERT_Id() as user_id;', function(req, resx,fields){
-                 console.log(resx);
-                   const user_id = resx[0].user_id;
-                        console.log("The User id is " + user_id)
-                        
-                             
-                              
-          
-     });
-                    
-   });
-   req.session.email =  "loggedin";   
+db.query('INSERT INTO users (Name, Email, Password) VALUES ("'+req.body.name+'", "'+req.body.email+'", "'+req.body.password+'")' 
+   );
+   req.session.email =  "LoggedIn";   
+   req.session.who =  req.body.name;
        res.redirect('/');   
 });
   
